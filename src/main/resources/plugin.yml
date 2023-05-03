@@ -1,0 +1,11 @@
+name: MagicItems
+version: '${project.version}'
+main: me.sploky.magicitems.SplokysMagicItems
+api-version: 1.19
+authors: [ Sploky ]
+description: Some Magic Items.
+commands:
+  magicgive:
+    description: Gives any magic item.
+    usage: /magicgive [ItemType]
+
