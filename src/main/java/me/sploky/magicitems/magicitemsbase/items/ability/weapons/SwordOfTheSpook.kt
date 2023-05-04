@@ -5,8 +5,8 @@ import me.sploky.magicitems.magicitemsbase.MagicItemType
 import me.sploky.magicitems.magicitemsbase.items.Cleanable
 import me.sploky.magicitems.magicitemsbase.items.LoreUpdatableItemStack
 import me.sploky.magicitems.magicitemsbase.items.ability.InteractAbilityItem
-import me.sploky.magicitems.magicitemsbase.items.MagicItemStack
 import me.sploky.magicitems.magicitemsbase.items.ability.MeleeAbilityItem
+import me.sploky.magicitems.annotation.GarbageCleanable
 import me.sploky.magicitems.namespace.MagicItemKeys
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
@@ -25,6 +25,7 @@ import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
 import kotlin.random.Random
 
+@GarbageCleanable
 open class SwordOfTheSpook: LoreUpdatableItemStack(), MeleeAbilityItem, InteractAbilityItem, Cleanable {
     override val name: TextComponent
         get() = MiniMessage.miniMessage().deserialize("<yellow>Sword of the</yellow> <b><red>Spook</red></b>") as TextComponent
