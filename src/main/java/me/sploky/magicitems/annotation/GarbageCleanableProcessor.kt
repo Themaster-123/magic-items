@@ -1,6 +1,6 @@
 package me.sploky.magicitems.annotation
 
-import com.google.auto.service.AutoService
+/*import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.*
 import java.io.File
 import javax.annotation.processing.AbstractProcessor
@@ -71,4 +71,4 @@ class GarbageCleanableProcessor: AbstractProcessor() {
         val kaptKotlinGeneratedDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME]
         file.writeTo(File(kaptKotlinGeneratedDir!!))
     }
-}
+}*/

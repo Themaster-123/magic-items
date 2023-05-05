@@ -1,5 +1,5 @@
 name: MagicItems
-version: '${version}'
+version: '1.0-SNAPSHOT'
 main: me.sploky.magicitems.SplokysMagicItems
 api-version: 1.19
 authors: [ Sploky ]
