@@ -38,10 +38,10 @@ open class SwordOfTheSpook: LoreUpdatableItemStack(), MeleeAbilityItem, Interact
     open val releasedSoulAttackRange: Double
         get() = 1.5
     protected open val soulSpawnRadius: Double
-        get() = .75
+        get() = 1.0
     protected open val maxSpawnTries: Int
         get() = 10
-    protected val releasedSouls = mutableListOf<Allay>();
+    protected val releasedSouls = mutableListOf<Allay>()
 
     init {
         object : BukkitRunnable() {
@@ -102,7 +102,7 @@ open class SwordOfTheSpook: LoreUpdatableItemStack(), MeleeAbilityItem, Interact
 
         allay.teleport(spawnLocation)
 
-        world.spawnParticle(Particle.REDSTONE, location.x, location.y, location.z, 15, DustOptions(Color.AQUA, 2f))
+        world.spawnParticle(Particle.REDSTONE, spawnLocation.x, spawnLocation.y, spawnLocation.z, 15, DustOptions(Color.AQUA, 2f))
 
         allay.setCanDuplicate(false)
         allay.equipment.setItemInMainHand(ItemStack(Material.NETHERITE_SWORD))
@@ -130,7 +130,7 @@ open class SwordOfTheSpook: LoreUpdatableItemStack(), MeleeAbilityItem, Interact
     }
 
     protected fun setSoulsCollected(itemStack: ItemStack, soulsCollected: Int) {
-        val itemMeta = itemStack.itemMeta;
+        val itemMeta = itemStack.itemMeta
         val soulsCollectedKey = NamespacedKey(SplokysMagicItems.pluginInstance, MagicItemKeys.SoulsCollected.key)
         itemMeta.persistentDataContainer.set(soulsCollectedKey, PersistentDataType.INTEGER, soulsCollected )
         itemStack.itemMeta = itemMeta
@@ -139,7 +139,7 @@ open class SwordOfTheSpook: LoreUpdatableItemStack(), MeleeAbilityItem, Interact
     }
 
     protected fun getSoulsCollected(itemStack: ItemStack): Int {
-        val itemMeta = itemStack.itemMeta;
+        val itemMeta = itemStack.itemMeta
         val soulsCollectedKey = NamespacedKey(SplokysMagicItems.pluginInstance, MagicItemKeys.SoulsCollected.key)
         return  itemMeta.persistentDataContainer.getOrDefault(soulsCollectedKey, PersistentDataType.INTEGER, 0)
     }
