@@ -2,7 +2,9 @@ package me.sploky.magicitems.magicitemsbase
 
 enum class MagicItemType(val typeName: String, val keyName: String) {
     BLOCK_WAND("BlockWand", "block_wand"),
-    SWORD_OF_THE_SPOOK("Sword of the Spook", "Sword_of_the_Spook");
+    SWORD_OF_THE_SPOOK("Sword of the Spook", "Sword_of_the_Spook"),
+    NUKE("Nuke", "Nuke"),
+    BIGGER_NUKE("Bigger Nuke", "Bigger_Nuke");
 
     companion object {
         @Throws(IllegalArgumentException::class) @JvmStatic
@@ -20,8 +22,8 @@ enum class MagicItemType(val typeName: String, val keyName: String) {
         private fun itemTypeFromParam(name: String, getParamF: (MagicItemType) -> String): MagicItemType {
             // returns the MagicItemType from a param
             return values().find {
-                name.equals(getParamF(it).replace(" ", ""), true);
-            } ?: throw IllegalArgumentException("MagicItemType does not exist");
+                name.equals(getParamF(it).replace(" ", ""), true)
+            } ?: throw IllegalArgumentException("MagicItemType does not exist")
         }
     }
 

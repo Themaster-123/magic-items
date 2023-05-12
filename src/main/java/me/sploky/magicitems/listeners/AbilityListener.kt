@@ -17,7 +17,8 @@ class AbilityListener: Listener {
     private val playerAbilityUsedList = mutableListOf<Player>()
 
     init {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(SplokysMagicItems.pluginInstance, Runnable { playerAbilityUsedList.clear() }, 0, 1)
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(SplokysMagicItems.pluginInstance,
+            { playerAbilityUsedList.clear() }, 0, 1)
     }
 
     @EventHandler
@@ -29,10 +30,14 @@ class AbilityListener: Listener {
         val magicItem = MagicItemStackUtils.getMagicItem(itemStack) ?: return
         val player = event.player
 
-        if (magicItem is InteractAbilityItem && !hasUsedAbility(player)) {
+        if (magicItem is InteractAbilityItem) {
+            event.isCancelled = true
+
+            if (hasUsedAbility(player))
+                return
+
             playerAbilityUsedList.add(player)
             magicItem.useAbility(itemStack, player)
-            event.isCancelled = true;
 
         }
     }

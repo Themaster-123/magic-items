@@ -3,6 +3,8 @@ package me.sploky.magicitems
 import me.sploky.magicitems.commands.CommandMagicGive
 import me.sploky.magicitems.listeners.AbilityListener
 import me.sploky.magicitems.listeners.MeleeAbilityListener
+import me.sploky.magicitems.magicitemsbase.items.ability.misc.BiggerNuke
+import me.sploky.magicitems.magicitemsbase.items.ability.misc.Nuke
 import me.sploky.magicitems.registries.MagicItemRegistry
 import me.sploky.magicitems.magicitemsbase.items.ability.wands.BlockWand
 import me.sploky.magicitems.magicitemsbase.items.ability.weapons.SwordOfTheSpook
@@ -45,6 +47,8 @@ class SplokysMagicItems : JavaPlugin() {
     private fun registerItems() {
         MagicItemRegistry.registerItem(BlockWand())
         MagicItemRegistry.registerItem(SwordOfTheSpook())
+        MagicItemRegistry.registerItem(Nuke())
+        MagicItemRegistry.registerItem(BiggerNuke())
     }
 
     private fun registerEvents() {
