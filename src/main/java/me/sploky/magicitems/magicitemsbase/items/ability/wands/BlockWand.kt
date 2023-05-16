@@ -29,16 +29,16 @@ import kotlin.random.Random
 
 open class BlockWand : MagicItemStack(), Wand, RangedItem, ExplosionItem, CancelableAbilityItem {
     override val name: TextComponent
-        get() = Component.text("BlockWand", NamedTextColor.BLUE);
+        get() = Component.text("BlockWand", NamedTextColor.BLUE)
 
     override val description: List<TextComponent>
-        get() = listOf(Component.text("Grabs any block You look at.", NamedTextColor.GOLD));
+        get() = listOf(Component.text("Grabs any block You look at.", NamedTextColor.GOLD))
 
     override val material: Material
-        get() = Material.DIAMOND_SHOVEL;
+        get() = Material.DIAMOND_SHOVEL
 
     override val itemType: MagicItemType
-        get() = MagicItemType.BLOCK_WAND;
+        get() = MagicItemType.BLOCK_WAND
 
     override val maxDistance: Int
         get() = 10
@@ -53,7 +53,7 @@ open class BlockWand : MagicItemStack(), Wand, RangedItem, ExplosionItem, Cancel
     override fun useAbility(itemStack: ItemStack, player: Player) {
         val blockWandData = getBlockWandData(player)
 
-        if (blockWandData.abilityDisabled) return
+        if (!blockWandData.abilityEnabled) return
 
         if (blockWandData.heldBlock == Material.AIR){
             pickUpBlock(itemStack, player, blockWandData)
@@ -71,14 +71,14 @@ open class BlockWand : MagicItemStack(), Wand, RangedItem, ExplosionItem, Cancel
         val blockWandData = getBlockWandData(player)
         shootBlock(itemStack, player, blockWandData)
 
-        player.setMagicData(itemType, blockWandData);
+        player.setMagicData(itemType, blockWandData)
     }
 
     protected open fun pickUpBlock(itemStack: ItemStack, player: Player, blockWandData: BlockWandData) {
-        cancelBlockHoldingTask(blockWandData);
+        cancelBlockHoldingTask(blockWandData)
         val targetBlock = player.getTargetBlockExact(maxDistance)
 
-        blockWandData.heldBlock = targetBlock?.type ?: Material.AIR;
+        blockWandData.heldBlock = targetBlock?.type ?: Material.AIR
         if (targetBlock == null)
             return
 
@@ -86,15 +86,15 @@ open class BlockWand : MagicItemStack(), Wand, RangedItem, ExplosionItem, Cancel
 
         world.playSound(targetBlock.location, targetBlock.blockSoundGroup.placeSound, 1f, 1f)
 
-        blockWandData.abilityDisabled = true;
+        blockWandData.abilityEnabled = false
 
         val blockDisplay = createBlockDisplay(world, targetBlock)
-        blockWandData.currentBlockDisplay = blockDisplay;
+        blockWandData.currentBlockDisplay = blockDisplay
 
         blockDisplay.interpolationDuration = 5
         blockDisplay.interpolationDelay = -1
 
-        var currentTick = 0;
+        var currentTick = 0
         blockWandData.holdingBlockTask = Bukkit.getScheduler().
         scheduleSyncRepeatingTask(SplokysMagicItems.pluginInstance,
             {  blockHoldingTask(player, itemStack, blockWandData, currentTick); currentTick++ }, 3, 1)
@@ -106,7 +106,7 @@ open class BlockWand : MagicItemStack(), Wand, RangedItem, ExplosionItem, Cancel
                 targetBlock.type = Material.AIR
             }
 
-        }.runTaskLater(SplokysMagicItems.pluginInstance, 1);
+        }.runTaskLater(SplokysMagicItems.pluginInstance, 1)
     }
 
     protected open fun shootBlock(itemStack: ItemStack, player: Player, blockWandData: BlockWandData) {
@@ -114,20 +114,20 @@ open class BlockWand : MagicItemStack(), Wand, RangedItem, ExplosionItem, Cancel
         val rayTraceResult = player.world.rayTraceBlocks(player.eyeLocation, player.eyeLocation.direction,99999.0, FluidCollisionMode.NEVER,
             true) ?: return
 
-        cancelBlockHoldingTask(blockWandData);
-        blockWandData.heldBlock = Material.AIR;
+        cancelBlockHoldingTask(blockWandData)
+        blockWandData.heldBlock = Material.AIR
 
 
-        val hitPosition = rayTraceResult.hitPosition;
-        val oldTransformation = blockDisplay.transformation;
-        blockDisplay.isGlowing = true;
+        val hitPosition = rayTraceResult.hitPosition
+        val oldTransformation = blockDisplay.transformation
+        blockDisplay.isGlowing = true
 
         blockDisplay.interpolationDuration = 2
         blockDisplay.interpolationDelay = -1
 
         blockDisplay.transformation = TransformationUtils.createTransformation(blockDisplay.location.toVector(), hitPosition, oldTransformation.leftRotation)
 
-        val world = player.world;
+        val world = player.world
 
         // play sounds on hit
         object : BukkitRunnable() {
@@ -154,32 +154,32 @@ open class BlockWand : MagicItemStack(), Wand, RangedItem, ExplosionItem, Cancel
             Bukkit.getScheduler().cancelTask(blockWandData.holdingBlockTask)
 
         }
-        blockWandData.holdingBlockTask = -1;
-        blockWandData.currentBlockDisplay = null;
-        blockWandData.abilityDisabled = false
+        blockWandData.holdingBlockTask = -1
+        blockWandData.currentBlockDisplay = null
+        blockWandData.abilityEnabled = true
 
     }
 
     protected open fun blockHoldingTask(player: Player, itemStack: ItemStack, blockWandData: BlockWandData, currentTick: Int) {
-        val blockDisplay = blockWandData.currentBlockDisplay!!;
+        val blockDisplay = blockWandData.currentBlockDisplay!!
 
         val blockDisplayRotation = MathUtils.eulerToQuaternion(
             Math.toRadians(player.eyeLocation.pitch.toDouble()).toFloat(),
             Math.toRadians(-player.eyeLocation.yaw.toDouble()).toFloat(),
             0f)
 
-        val random = Random(currentTick);
+        val random = Random(currentTick)
 
         val blockDisplayPos = player.eyeLocation.toVector().add(player.eyeLocation.direction .multiply(3)).
         add(Vector(random.nextFloat(), random.nextFloat(), random.nextFloat()).multiply(0.001f))
 
         blockDisplay.interpolationDuration = 2
-        blockDisplay.interpolationDelay = -1;
+        blockDisplay.interpolationDelay = -1
 
 
         blockDisplay.transformation = TransformationUtils.createTransformation(blockDisplay.location.toVector(), blockDisplayPos, blockDisplayRotation)
 
-        blockWandData.abilityDisabled = false
+        blockWandData.abilityEnabled = true
     }
 
     protected open fun createBlockDisplay(world: World, block: Block): BlockDisplay {
