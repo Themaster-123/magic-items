@@ -25,7 +25,6 @@ class HeldItemWatcher: Watcher {
             val prevItem = lastItemHeldMap.getOrPut(it) { ItemStack(Material.AIR) }
             val currentHeldItem = it.inventory.getItem(EquipmentSlot.HAND)
             if (prevItem != currentHeldItem) {
-                SplokysMagicItems.pluginInstance.logger.info("test")
                 val itemChangeEvent = PlayerHeldItemChangeEvent(it, prevItem, currentHeldItem)
                 itemChangeEvent.callEvent()
             }

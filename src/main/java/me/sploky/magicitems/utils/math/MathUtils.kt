@@ -1,5 +1,6 @@
 package me.sploky.magicitems.utils.math
 
+import org.bukkit.util.Vector
 import org.joml.Quaternionf
 import kotlin.math.cos
 import kotlin.math.sin
@@ -21,7 +22,14 @@ class MathUtils {
                 cr * sp * cy + sr * cp * sy,
                 cr * cp * sy - sr * sp * cy,
                 cr * cp * cy + sr * sp * sy
-            ).normalize();
+            ).normalize()
+        }
+
+        @JvmStatic
+        fun reflect(vector: Vector, normal: Vector): Vector {
+            val normalizedNormal = normal.clone().normalize()
+
+            return vector.clone().subtract(normalizedNormal.multiply(2 * vector.dot(normal)))
         }
     }
 }

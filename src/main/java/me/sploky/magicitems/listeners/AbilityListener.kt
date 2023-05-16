@@ -2,7 +2,7 @@ package me.sploky.magicitems.listeners
 
 import me.sploky.magicitems.SplokysMagicItems
 import me.sploky.magicitems.events.PlayerHeldItemChangeEvent
-import me.sploky.magicitems.magicitemsbase.MagicItemStackUtils
+import me.sploky.magicitems.utils.datacontainer.MagicDataContainerUtils
 import me.sploky.magicitems.magicitemsbase.items.ability.CancelableAbilityItem
 import me.sploky.magicitems.magicitemsbase.items.ability.InteractAbilityItem
 import org.bukkit.Bukkit
@@ -27,13 +27,13 @@ class AbilityListener: Listener {
 
         val itemStack = event.item ?: return
 
-        val magicItem = MagicItemStackUtils.getMagicItem(itemStack) ?: return
+        val magicItem = MagicDataContainerUtils.getMagicItem(itemStack) ?: return
         val player = event.player
 
         if (magicItem is InteractAbilityItem) {
             event.isCancelled = true
 
-            if (hasUsedAbility(player))
+            if (hasUsedAbilityOnSameTick(player))
                 return
 
             playerAbilityUsedList.add(player)
@@ -45,14 +45,14 @@ class AbilityListener: Listener {
     @EventHandler
     fun onPlayerHeldItemChange(event: PlayerHeldItemChangeEvent) {
         val itemStack = event.prevHeldItem
-        val magicItem = MagicItemStackUtils.getMagicItem(itemStack) ?: return
+        val magicItem = MagicDataContainerUtils.getMagicItem(itemStack) ?: return
 
         if (magicItem is CancelableAbilityItem) {
             magicItem.cancelAbility(event.player, itemStack)
         }
     }
 
-    fun hasUsedAbility(player: Player): Boolean {
+    private fun hasUsedAbilityOnSameTick(player: Player): Boolean {
         return playerAbilityUsedList.contains(player)
     }
 }
