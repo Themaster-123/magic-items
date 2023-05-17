@@ -4,5 +4,5 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 interface CancelableAbilityItem {
-    fun cancelAbility(player: Player, itemStack: ItemStack);
+    fun cancelAbility(itemStack: ItemStack, player: Player)
 }

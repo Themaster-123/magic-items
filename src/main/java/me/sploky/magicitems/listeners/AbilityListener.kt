@@ -48,7 +48,7 @@ class AbilityListener: Listener {
         val magicItem = MagicDataContainerUtils.getMagicItem(itemStack) ?: return
 
         if (magicItem is CancelableAbilityItem) {
-            magicItem.cancelAbility(event.player, itemStack)
+            magicItem.cancelAbility(itemStack, event.player)
         }
     }
 

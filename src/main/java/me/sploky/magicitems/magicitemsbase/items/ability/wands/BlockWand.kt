@@ -67,7 +67,7 @@ open class BlockWand : MagicItemStack(), Wand, RangedItem, ExplosionItem, Cancel
 
 
 
-    override fun cancelAbility(player: Player, itemStack: ItemStack) {
+    override fun cancelAbility(itemStack: ItemStack, player: Player) {
         val blockWandData = getBlockWandData(player)
         shootBlock(itemStack, player, blockWandData)
 
