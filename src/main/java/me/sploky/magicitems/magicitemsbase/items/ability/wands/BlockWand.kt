@@ -95,7 +95,7 @@ open class BlockWand : MagicItemStack(), Wand, RangedItem, ExplosionItem, Cancel
         blockDisplay.interpolationDelay = -1
 
         var currentTick = 0
-        blockWandData.holdingBlockTask = Bukkit.getScheduler().
+        blockWandData.taskId = Bukkit.getScheduler().
         scheduleSyncRepeatingTask(SplokysMagicItems.pluginInstance,
             {  blockHoldingTask(player, itemStack, blockWandData, currentTick); currentTick++ }, 3, 1)
 
@@ -150,11 +150,11 @@ open class BlockWand : MagicItemStack(), Wand, RangedItem, ExplosionItem, Cancel
 
     protected open fun cancelBlockHoldingTask(blockWandData: BlockWandData) {
 
-        if (blockWandData.holdingBlockTask != -1) {
-            Bukkit.getScheduler().cancelTask(blockWandData.holdingBlockTask)
+        if (blockWandData.taskId != -1) {
+            Bukkit.getScheduler().cancelTask(blockWandData.taskId)
 
         }
-        blockWandData.holdingBlockTask = -1
+        blockWandData.taskId = -1
         blockWandData.currentBlockDisplay = null
         blockWandData.abilityEnabled = true
 

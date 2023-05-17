@@ -4,8 +4,7 @@ import org.bukkit.Material
 import org.bukkit.entity.BlockDisplay
 
 data class BlockWandData(var heldBlock: Material = Material.AIR,
-                         var holdingBlockTask: Int = -1,
                          var currentBlockDisplay: BlockDisplay? = null,
-                         override var abilityEnabled: Boolean = true
-) : MagicItemData, AbilityData {
+                         override var abilityEnabled: Boolean = true, override var taskId: Int = -1
+) : MagicItemData, AbilityData, ContinuousTaskAbilityData {
 }
