@@ -6,6 +6,7 @@ import me.sploky.magicitems.listeners.BowAbilityListener
 import me.sploky.magicitems.listeners.MeleeAbilityListener
 import me.sploky.magicitems.magicitemsbase.items.ability.misc.BiggerNuke
 import me.sploky.magicitems.magicitemsbase.items.ability.misc.Nuke
+import me.sploky.magicitems.magicitemsbase.items.ability.misc.TotemOfDying
 import me.sploky.magicitems.registries.MagicItemRegistry
 import me.sploky.magicitems.magicitemsbase.items.ability.wands.BlockWand
 import me.sploky.magicitems.magicitemsbase.items.ability.weapons.BouncyBow
@@ -52,6 +53,7 @@ class SplokysMagicItems : JavaPlugin() {
         MagicItemRegistry.registerItem(Nuke())
         MagicItemRegistry.registerItem(BiggerNuke())
         MagicItemRegistry.registerItem(BouncyBow())
+        MagicItemRegistry.registerItem(TotemOfDying())
     }
 
     private fun registerEvents() {

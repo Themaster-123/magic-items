@@ -28,10 +28,10 @@ class TransformationUtils {
         }
 
         @JvmStatic
-        fun createTransformation(basePosition: Vector, position: Vector, leftRotation: Quaternionf,
+        fun createTransformation(entityPosition: Vector, position: Vector, leftRotation: Quaternionf,
                                  scale: Vector = Vector(1, 1, 1), rightRotation: Quaternionf = Quaternionf(), centered: Boolean = true
         ): Transformation {
-            val adjustedPosition = position.clone().subtract(basePosition)
+            val adjustedPosition = position.clone().subtract(entityPosition)
 
             return createTransformation(adjustedPosition, leftRotation, scale, rightRotation, centered)
         }
