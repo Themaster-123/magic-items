@@ -1,7 +1,7 @@
 name: MagicItems
 version: '${version}'
 main: me.sploky.magicitems.SplokysMagicItems
-api-version: 1.19
+api-version: 1.20
 authors: [ Sploky ]
 description: Some Magic Items.
 commands:
