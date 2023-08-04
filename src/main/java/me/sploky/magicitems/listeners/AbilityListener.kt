@@ -5,6 +5,7 @@ import me.sploky.magicitems.events.PlayerHeldItemChangeEvent
 import me.sploky.magicitems.utils.datacontainer.MagicDataContainerUtils
 import me.sploky.magicitems.magicitemsbase.items.ability.CancelableAbilityItem
 import me.sploky.magicitems.magicitemsbase.items.ability.InteractAbilityItem
+import me.sploky.magicitems.magicitemsbase.items.ability.PunchInteractAbilityItem
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -23,23 +24,30 @@ class AbilityListener: Listener {
 
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {
-        if (event.hand == EquipmentSlot.OFF_HAND || event.action == Action.LEFT_CLICK_AIR || event.action == Action.LEFT_CLICK_BLOCK) return
+        if (event.hand == EquipmentSlot.OFF_HAND) return
 
         val itemStack = event.item ?: return
 
         val magicItem = MagicDataContainerUtils.getMagicItem(itemStack) ?: return
         val player = event.player
 
-        if (magicItem is InteractAbilityItem) {
-            event.isCancelled = true
+        if (magicItem !is InteractAbilityItem && magicItem !is PunchInteractAbilityItem)
+            return
 
-            if (hasUsedAbilityOnSameTick(player))
-                return
 
-            playerAbilityUsedList.add(player)
+        event.isCancelled = true
+
+        if (hasUsedAbilityOnSameTick(player))
+            return
+
+        playerAbilityUsedList.add(player)
+
+        if (magicItem is InteractAbilityItem && (event.action == Action.RIGHT_CLICK_AIR || event.action == Action.RIGHT_CLICK_BLOCK))
             magicItem.useAbility(itemStack, player)
 
-        }
+        if (magicItem is PunchInteractAbilityItem && (event.action == Action.LEFT_CLICK_AIR || event.action == Action.LEFT_CLICK_BLOCK))
+            magicItem.punchAbility(itemStack, player)
+
     }
 
     @EventHandler
